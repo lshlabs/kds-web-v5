@@ -57,7 +57,7 @@ export function PlatformStats() {
     <Card className="p-5 bg-card border-border/50">
       {/* 헤더 */}
       <div className="mb-5">
-        <h3 className="text-base font-semibold">배달 플랫폼별 통계</h3>
+        <h3 className="text-base font-semibold">주문 유형</h3>
         <p className="text-xs text-muted-foreground mt-0.5">
           총 {totalOrders}건 · ₩{totalRevenue.toLocaleString()}
         </p>

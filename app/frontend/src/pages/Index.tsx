@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { KpiCards } from '@/components/dashboard/KpiCards';
 import { OrderFlowChart } from '@/components/dashboard/OrderFlowChart';
 import { KitchenStatus } from '@/components/dashboard/KitchenStatus';
@@ -8,9 +9,16 @@ import { CalendarDays, Store } from 'lucide-react';
 
 export default function Index() {
   const today = new Date();
-  const dateStr = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+  const toLocalDateString = (d: Date) =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+  const [selectedDate, setSelectedDate] = useState<string>(toLocalDateString(today));
+  const dateInputRef = useRef<HTMLInputElement>(null);
+
+  const parsed = new Date(selectedDate + 'T00:00:00');
+  const dateStr = `${parsed.getFullYear()}년 ${parsed.getMonth() + 1}월 ${parsed.getDate()}일`;
   const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
-  const dayStr = dayNames[today.getDay()];
+  const dayStr = dayNames[parsed.getDay()];
 
   return (
     <div className="min-h-screen bg-background">
@@ -26,9 +34,24 @@ export default function Index() {
               <p className="text-xs text-muted-foreground">오늘의 운영 현황을 한눈에</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <CalendarDays className="h-4 w-4" />
-            <span>{dateStr} ({dayStr})</span>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => dateInputRef.current?.showPicker()}
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer select-none"
+            >
+              <CalendarDays className="h-4 w-4" />
+              <span>{dateStr} ({dayStr})</span>
+            </button>
+            <input
+              ref={dateInputRef}
+              type="date"
+              value={selectedDate}
+              onChange={(e) => e.target.value && setSelectedDate(e.target.value)}
+              className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+              tabIndex={-1}
+              aria-hidden="true"
+            />
           </div>
         </div>
       </header>

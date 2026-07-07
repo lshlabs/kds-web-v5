@@ -11,7 +11,7 @@ export interface KpiData {
   export interface HourlyOrder {
     hour: string;
     today: number;
-    yesterday: number;
+    avg7day: number;
   }
   
   export interface KitchenStatusItem {
@@ -36,14 +36,14 @@ export interface KpiData {
   // KPI 데이터
   export const kpiData: KpiData[] = [
     {
-      label: '오늘 주문 수',
+      label: '주문 수',
       value: 187,
       unit: '건',
       change: 12.5,
       changeLabel: '전일 대비',
     },
     {
-      label: '오늘 매출',
+      label: '매출',
       value: '2,847,000',
       unit: '원',
       change: 8.3,
@@ -79,26 +79,26 @@ export interface KpiData {
   
   // 시간대별 주문 흐름
   export const hourlyOrders: HourlyOrder[] = [
-    { hour: '10시', today: 5, yesterday: 4 },
-    { hour: '11시', today: 18, yesterday: 15 },
-    { hour: '12시', today: 42, yesterday: 38 },
-    { hour: '13시', today: 35, yesterday: 32 },
-    { hour: '14시', today: 12, yesterday: 14 },
-    { hour: '15시', today: 8, yesterday: 9 },
-    { hour: '16시', today: 6, yesterday: 7 },
-    { hour: '17시', today: 14, yesterday: 11 },
-    { hour: '18시', today: 28, yesterday: 25 },
-    { hour: '19시', today: 32, yesterday: 30 },
-    { hour: '20시', today: 22, yesterday: 20 },
-    { hour: '21시', today: 15, yesterday: 12 },
+    { hour: '10시', today: 5,  avg7day: 6  },
+    { hour: '11시', today: 18, avg7day: 16 },
+    { hour: '12시', today: 42, avg7day: 37 },
+    { hour: '13시', today: 35, avg7day: 33 },
+    { hour: '14시', today: 12, avg7day: 13 },
+    { hour: '15시', today: 8,  avg7day: 9  },
+    { hour: '16시', today: 6,  avg7day: 7  },
+    { hour: '17시', today: 14, avg7day: 12 },
+    { hour: '18시', today: 28, avg7day: 26 },
+    { hour: '19시', today: 32, avg7day: 29 },
+    { hour: '20시', today: 22, avg7day: 21 },
+    { hour: '21시', today: 15, avg7day: 13 },
   ];
   
   // 주방 처리 상태
   export const kitchenStatus: KitchenStatusItem[] = [
-    { status: '완료', count: 176, color: 'hsl(142, 71%, 45%)' },
+    { status: '완료', count: 173, color: 'hsl(142, 71%, 45%)' },
     { status: '진행중', count: 4, color: 'hsl(217, 91%, 60%)' },
-    { status: '대기', count: 3, color: 'hsl(45, 93%, 47%)' },
     { status: '지연', count: 4, color: 'hsl(0, 84%, 60%)' },
+    { status: '취소', count: 6, color: 'hsl(220, 10%, 60%)' },
   ];
   
   // 메뉴별 판매 성과
@@ -120,7 +120,7 @@ export interface KpiData {
     },
     {
       type: 'info',
-      message: '피크 시간(12~13시) 주문이 전일 대비 15% 증가했습니다. 인력 배치를 확인해보세요.',
+      message: '피크 시간(12~13시) 주문이 7일 평균 대비 13.5% 증가했습니다. 인력 배치를 확인해보세요.',
     },
     {
       type: 'warning',

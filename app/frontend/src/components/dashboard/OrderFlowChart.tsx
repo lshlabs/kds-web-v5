@@ -24,7 +24,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-muted-foreground/40" />
-            <span className="text-xs text-muted-foreground">어제:</span>
+            <span className="text-xs text-muted-foreground">7일평균:</span>
             <span className="text-xs font-semibold text-foreground">{payload[1]?.value}건</span>
           </div>
         </div>
@@ -45,7 +45,7 @@ export function OrderFlowChart() {
         <div>
           <h3 className="text-base font-semibold">시간대별 주문 흐름</h3>
           <p className="text-xs text-muted-foreground mt-0.5">
-            오늘 vs 어제 · 피크: {peakHour.hour} ({peakHour.today}건)
+            오늘 vs 7일평균 · 피크: {peakHour.hour} ({peakHour.today}건)
           </p>
         </div>
         <div className="flex items-center gap-4">
@@ -55,7 +55,7 @@ export function OrderFlowChart() {
           </div>
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-0.5 rounded-full bg-muted-foreground/40" />
-            <span className="text-xs text-muted-foreground">어제</span>
+            <span className="text-xs text-muted-foreground">7일평균</span>
           </div>
         </div>
       </div>
@@ -89,7 +89,7 @@ export function OrderFlowChart() {
             />
             <Area
               type="monotone"
-              dataKey="yesterday"
+              dataKey="avg7day"
               stroke="hsl(220, 10%, 70%)"
               strokeWidth={1.5}
               fill="transparent"

@@ -10,7 +10,7 @@ export function MenuPerformance() {
     <Card className="p-5 bg-card border-border/50">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-base font-semibold">메뉴별 판매 성과</h3>
+          <h3 className="text-base font-semibold">메뉴별 현황</h3>
           <p className="text-xs text-muted-foreground mt-0.5">
             상위 7개 메뉴 · 판매량 기준
           </p>

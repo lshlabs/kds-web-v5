@@ -20,7 +20,7 @@ export function KitchenStatus() {
   return (
     <Card className="p-5 bg-card border-border/50 h-full flex flex-col">
       <div className="mb-4">
-        <h3 className="text-base font-semibold">주방 처리 상태</h3>
+        <h3 className="text-base font-semibold">업무 현황</h3>
         <p className="text-xs text-muted-foreground mt-0.5">
           전체 {total}건 · 완료율 {((kitchenStatus[0].count / total) * 100).toFixed(1)}%
         </p>
@@ -83,7 +83,7 @@ export function KitchenStatus() {
                   tickLine={false}
                   width={55}
                 />
-                <Tooltip content={<CustomBarTooltip />} />
+                <Tooltip content={<CustomBarTooltip />} cursor={false} />
                 <Bar
                   dataKey="count"
                   radius={[0, 4, 4, 0]}
