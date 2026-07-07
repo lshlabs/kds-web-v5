@@ -99,17 +99,19 @@ export function PlatformStats() {
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
               {activePlatform ? (
                 <>
-                  <div
-                    className="w-2 h-2 rounded-full mb-1"
-                    style={{ backgroundColor: activePlatform.color }}
-                  />
-                  <span className="text-[11px] text-muted-foreground mb-0.5 truncate max-w-[90px] text-center">
-                    {activePlatform.name}
-                  </span>
-                  <span className="text-xl font-bold leading-none">{activePlatform.orders}</span>
-                  <span className="text-[10px] text-muted-foreground mt-0.5">
+                  <span className="text-2xl font-bold leading-none">{activePlatform.orders}</span>
+                  <span className="text-[11px] text-muted-foreground mt-1">
                     {((activePlatform.orders / totalOrders) * 100).toFixed(1)}%
                   </span>
+                  <div className="mt-1 flex items-center gap-1">
+                    <div
+                      className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: activePlatform.color }}
+                    />
+                    <span className="text-[11px] text-muted-foreground truncate max-w-[80px] text-center">
+                      {activePlatform.name}
+                    </span>
+                  </div>
                 </>
               ) : (
                 <>
