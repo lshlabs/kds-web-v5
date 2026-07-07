@@ -58,10 +58,10 @@ export default defineConfig(({ command }) => {
       }),
       ...(blogPrerenderRoutes.length > 0
         ? vitePrerenderPlugin({
-            renderTarget: '#root',
-            prerenderScript: path.resolve(__dirname, 'prerender/blog.js'),
-            additionalPrerenderRoutes: blogPrerenderRoutes,
-          })
+          renderTarget: '#root',
+          prerenderScript: path.resolve(__dirname, 'prerender/blog.js'),
+          additionalPrerenderRoutes: blogPrerenderRoutes,
+        })
         : []),
     ],
     resolve: {
@@ -73,6 +73,12 @@ export default defineConfig(({ command }) => {
       host: '0.0.0.0', // Listen on all network interfaces.
       port: parseInt(process.env.VITE_PORT || '5173'),
       strictPort: true,
+      allowedHosts: [
+        'localhost',
+        '127.0.0.1',
+        '.vercel.run',
+        '.vusercontent.net',
+      ],
       proxy: {
         '/api': {
           target: `http://localhost:${process.env.BACKEND_PORT || '8000'}`,
