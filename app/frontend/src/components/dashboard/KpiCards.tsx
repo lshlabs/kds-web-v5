@@ -1,10 +1,10 @@
-import { TrendingUp, TrendingDown, Minus, ShoppingCart, DollarSign, CheckCircle, Clock, AlertTriangle, Flame } from 'lucide-react';
+import { TrendingUp, TrendingDown, Minus, ShoppingCart, CircleDollarSign, CheckCircle, Clock, AlertTriangle, Flame } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { kpiData } from '@/data/mock-data';
 
 const iconMap: Record<string, React.ReactNode> = {
-  '오늘 주문 수': <ShoppingCart className="h-5 w-5" />,
-  '오늘 매출': <DollarSign className="h-5 w-5" />,
+  '주문 수': <ShoppingCart className="h-5 w-5" />,
+  '매출': <CircleDollarSign className="h-5 w-5" />,
   '완료율': <CheckCircle className="h-5 w-5" />,
   '평균 완료 시간': <Clock className="h-5 w-5" />,
   '지연 주문': <AlertTriangle className="h-5 w-5" />,
@@ -19,7 +19,7 @@ const getChangeIcon = (change: number) => {
 
 const getChangeColor = (change: number, label: string) => {
   // 지연 주문은 감소가 좋은 것
-  const isInverse = label === '지연 주문' || label === '평균 완료 시간';
+  const isInverse = label === '지연 주문' || label === '평균 완료 시간' || label === '취소';
   if (change === 0) return 'text-muted-foreground';
   if (isInverse) {
     return change < 0 ? 'text-emerald-400' : 'text-red-400';

@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { kitchenStatus, processingTimeData } from '@/data/mock-data';
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Sector, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 
 const CustomBarTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
@@ -14,24 +15,60 @@ const CustomBarTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
+const renderActiveShape = (props: any) => {
+  const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
+  return (
+    <Sector
+      cx={cx}
+      cy={cy}
+      innerRadius={innerRadius - 3}
+      outerRadius={outerRadius + 6}
+      startAngle={startAngle}
+      endAngle={endAngle}
+      fill={fill}
+      style={{ outline: 'none', cursor: 'pointer' }}
+    />
+  );
+};
+
+const renderNormalShape = (props: any) => {
+  const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
+  return (
+    <Sector
+      cx={cx}
+      cy={cy}
+      innerRadius={innerRadius}
+      outerRadius={outerRadius}
+      startAngle={startAngle}
+      endAngle={endAngle}
+      fill={fill}
+      style={{ outline: 'none' }}
+    />
+  );
+};
+
 export function KitchenStatus() {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
   const total = kitchenStatus.reduce((sum, item) => sum + item.count, 0);
+  const completedItem = kitchenStatus[0]; // 완료
+  const activeItem = activeIndex !== null ? kitchenStatus[activeIndex] : null;
 
   return (
-    <Card className="p-5 bg-card border-border/50">
+    <Card className="p-5 bg-card border-border/50 h-full flex flex-col">
       <div className="mb-4">
-        <h3 className="text-base font-semibold">주방 처리 상태</h3>
+        <h3 className="text-base font-semibold">업무 현황</h3>
         <p className="text-xs text-muted-foreground mt-0.5">
-          전체 {total}건 · 완료율 {((kitchenStatus[0].count / total) * 100).toFixed(1)}%
+          전체 {total}건 · 완료율 {((completedItem.count / total) * 100).toFixed(1)}%
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 flex-1">
         {/* 도넛 차트 */}
         <div className="flex flex-col items-center">
           <div className="h-[140px] w-[140px] relative">
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
+              <PieChart style={{ outline: 'none' }}>
                 <Pie
                   data={kitchenStatus}
                   cx="50%"
@@ -41,29 +78,77 @@ export function KitchenStatus() {
                   paddingAngle={3}
                   dataKey="count"
                   strokeWidth={0}
+                  activeIndex={activeIndex ?? undefined}
+                  activeShape={renderActiveShape}
+                  shape={renderNormalShape}
+                  onMouseEnter={(_, index) => setActiveIndex(index)}
+                  onMouseLeave={() => setActiveIndex(null)}
+                  onClick={(_, index) => setActiveIndex(activeIndex === index ? null : index)}
+                  style={{ outline: 'none', cursor: 'pointer' }}
                 >
                   {kitchenStatus.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                    <Cell key={`cell-${index}`} fill={entry.color} style={{ outline: 'none' }} />
                   ))}
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-xl font-bold">{kitchenStatus[0].count}</span>
-              <span className="text-[10px] text-muted-foreground">완료</span>
+
+            {/* 중앙 텍스트 */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
+              {activeItem ? (
+                <>
+                  <span className="text-xl font-bold leading-none">{activeItem.count}</span>
+                  <span className="text-[10px] text-muted-foreground mt-1">
+                    {((activeItem.count / total) * 100).toFixed(1)}%
+                  </span>
+                  <div className="mt-1 flex items-center gap-1">
+                    <div
+                      className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: activeItem.color }}
+                    />
+                    <span className="text-[10px] text-muted-foreground">{activeItem.status}</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span className="text-xl font-bold">{completedItem.count}</span>
+                  <span className="text-[10px] text-muted-foreground">완료</span>
+                  <div className="mt-1 flex items-center gap-1">
+                    <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: completedItem.color }} />
+                    <span className="text-[10px] text-muted-foreground">
+                      {((completedItem.count / total) * 100).toFixed(0)}%
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
+
           {/* 범례 */}
           <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 mt-3">
-            {kitchenStatus.map((item) => (
-              <div key={item.status} className="flex items-center gap-1.5">
+            {kitchenStatus.map((item, index) => (
+              <button
+                key={item.status}
+                className="flex items-center gap-1.5 focus:outline-none"
+                onMouseEnter={() => setActiveIndex(index)}
+                onMouseLeave={() => setActiveIndex(null)}
+                onClick={() => setActiveIndex(activeIndex === index ? null : index)}
+              >
                 <div
-                  className="w-2 h-2 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: item.color }}
+                  className="w-2 h-2 rounded-full flex-shrink-0 transition-transform duration-150"
+                  style={{
+                    backgroundColor: item.color,
+                    transform: activeIndex === index ? 'scale(1.4)' : 'scale(1)',
+                  }}
                 />
-                <span className="text-[11px] text-muted-foreground">{item.status}</span>
+                <span
+                  className="text-[11px] transition-colors duration-150"
+                  style={{ color: activeIndex === index ? item.color : undefined }}
+                >
+                  {item.status}
+                </span>
                 <span className="text-[11px] font-semibold">{item.count}</span>
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -83,7 +168,7 @@ export function KitchenStatus() {
                   tickLine={false}
                   width={55}
                 />
-                <Tooltip content={<CustomBarTooltip />} />
+                <Tooltip content={<CustomBarTooltip />} cursor={false} />
                 <Bar
                   dataKey="count"
                   radius={[0, 4, 4, 0]}

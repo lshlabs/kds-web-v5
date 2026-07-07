@@ -12,6 +12,8 @@ export interface KpiData {
     hour: string;
     today: number;
     yesterday: number;
+    avg3day: number;
+    avg7day: number;
   }
   
   export interface KitchenStatusItem {
@@ -36,14 +38,14 @@ export interface KpiData {
   // KPI 데이터
   export const kpiData: KpiData[] = [
     {
-      label: '오늘 주문 수',
+      label: '주문 수',
       value: 187,
       unit: '건',
       change: 12.5,
       changeLabel: '전일 대비',
     },
     {
-      label: '오늘 매출',
+      label: '매출',
       value: '2,847,000',
       unit: '원',
       change: 8.3,
@@ -79,26 +81,26 @@ export interface KpiData {
   
   // 시간대별 주문 흐름
   export const hourlyOrders: HourlyOrder[] = [
-    { hour: '10시', today: 5, yesterday: 4 },
-    { hour: '11시', today: 18, yesterday: 15 },
-    { hour: '12시', today: 42, yesterday: 38 },
-    { hour: '13시', today: 35, yesterday: 32 },
-    { hour: '14시', today: 12, yesterday: 14 },
-    { hour: '15시', today: 8, yesterday: 9 },
-    { hour: '16시', today: 6, yesterday: 7 },
-    { hour: '17시', today: 14, yesterday: 11 },
-    { hour: '18시', today: 28, yesterday: 25 },
-    { hour: '19시', today: 32, yesterday: 30 },
-    { hour: '20시', today: 22, yesterday: 20 },
-    { hour: '21시', today: 15, yesterday: 12 },
+    { hour: '10시', today: 5,  yesterday: 4,  avg3day: 5,  avg7day: 6  },
+    { hour: '11시', today: 18, yesterday: 15, avg3day: 16, avg7day: 16 },
+    { hour: '12시', today: 42, yesterday: 38, avg3day: 40, avg7day: 37 },
+    { hour: '13시', today: 35, yesterday: 32, avg3day: 34, avg7day: 33 },
+    { hour: '14시', today: 12, yesterday: 14, avg3day: 13, avg7day: 13 },
+    { hour: '15시', today: 8,  yesterday: 9,  avg3day: 9,  avg7day: 9  },
+    { hour: '16시', today: 6,  yesterday: 7,  avg3day: 7,  avg7day: 7  },
+    { hour: '17시', today: 14, yesterday: 11, avg3day: 12, avg7day: 12 },
+    { hour: '18시', today: 28, yesterday: 25, avg3day: 27, avg7day: 26 },
+    { hour: '19시', today: 32, yesterday: 29, avg3day: 30, avg7day: 29 },
+    { hour: '20시', today: 22, yesterday: 20, avg3day: 21, avg7day: 21 },
+    { hour: '21시', today: 15, yesterday: 12, avg3day: 13, avg7day: 13 },
   ];
   
   // 주방 처리 상태
   export const kitchenStatus: KitchenStatusItem[] = [
-    { status: '완료', count: 176, color: 'hsl(142, 71%, 45%)' },
+    { status: '완료', count: 173, color: 'hsl(142, 71%, 45%)' },
     { status: '진행중', count: 4, color: 'hsl(217, 91%, 60%)' },
-    { status: '대기', count: 3, color: 'hsl(45, 93%, 47%)' },
     { status: '지연', count: 4, color: 'hsl(0, 84%, 60%)' },
+    { status: '취소', count: 6, color: 'hsl(220, 10%, 60%)' },
   ];
   
   // 메뉴별 판매 성과
@@ -120,7 +122,7 @@ export interface KpiData {
     },
     {
       type: 'info',
-      message: '피크 시간(12~13시) 주문이 전일 대비 15% 증가했습니다. 인력 배치를 확인해보세요.',
+      message: '피크 시간(12~13시) 주문이 7일 평균 대비 13.5% 증가했습니다.',
     },
     {
       type: 'warning',
