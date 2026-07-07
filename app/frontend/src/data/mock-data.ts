@@ -120,7 +120,7 @@ export interface KpiData {
     },
     {
       type: 'info',
-      message: '피크 시간(12~13시) 주문이 7일 평균 대비 13.5% 증가했습니다. 인력 배치를 확인해보세요.',
+      message: '피크 시간(12~13시) 주문이 7일 평균 대비 13.5% 증가했습니다.',
     },
     {
       type: 'warning',
