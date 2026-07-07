@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { hourlyOrders } from '@/data/mock-data';
 import {
@@ -11,7 +12,20 @@ import {
   ReferenceLine,
 } from 'recharts';
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+type CompareMode = 'yesterday' | 'avg3day' | 'avg7day';
+
+const compareModes: { key: CompareMode; label: string }[] = [
+  { key: 'yesterday', label: '어제' },
+  { key: 'avg3day',   label: '3일평균' },
+  { key: 'avg7day',   label: '7일평균' },
+];
+
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+  compareLabel,
+}: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-card border border-border rounded-lg p-3 shadow-lg">
@@ -24,7 +38,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-muted-foreground/40" />
-            <span className="text-xs text-muted-foreground">7일평균:</span>
+            <span className="text-xs text-muted-foreground">{compareLabel}:</span>
             <span className="text-xs font-semibold text-foreground">{payload[1]?.value}건</span>
           </div>
         </div>
@@ -35,30 +49,58 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export function OrderFlowChart() {
+  const [compareMode, setCompareMode] = useState<CompareMode>('avg7day');
+
   const peakHour = hourlyOrders.reduce((max, item) =>
     item.today > max.today ? item : max
   );
 
+  const currentLabel = compareModes.find((m) => m.key === compareMode)!.label;
+
   return (
     <Card className="p-5 bg-card border-border/50 h-full flex flex-col">
-      <div className="flex items-center justify-between mb-4">
-        <div>
+      <div className="flex items-start justify-between mb-4 gap-3">
+        <div className="min-w-0">
           <h3 className="text-base font-semibold">시간대별 주문 흐름</h3>
           <p className="text-xs text-muted-foreground mt-0.5">
-            오늘 vs 7일평균 · 피크: {peakHour.hour} ({peakHour.today}건)
+            오늘 vs {currentLabel} · 피크: {peakHour.hour} ({peakHour.today}건)
           </p>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5 rounded-full bg-[hsl(217,91%,60%)]" />
-            <span className="text-xs text-muted-foreground">오늘</span>
+
+        <div className="flex items-center gap-3 flex-shrink-0">
+          {/* 범례 */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <div className="w-3 h-0.5 rounded-full bg-[hsl(217,91%,60%)]" />
+              <span className="text-xs text-muted-foreground">오늘</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <div className="w-3 h-0.5 rounded-full bg-muted-foreground/40" />
+              <span className="text-xs text-muted-foreground">{currentLabel}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5 rounded-full bg-muted-foreground/40" />
-            <span className="text-xs text-muted-foreground">7일평균</span>
+
+          {/* 토글 버튼 */}
+          <div className="flex items-center rounded-lg border border-border bg-muted/40 p-0.5">
+            {compareModes.map((mode) => (
+              <button
+                key={mode.key}
+                type="button"
+                onClick={() => setCompareMode(mode.key)}
+                className={[
+                  'px-2.5 py-1 text-xs rounded-md transition-colors font-medium',
+                  compareMode === mode.key
+                    ? 'bg-card text-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground',
+                ].join(' ')}
+              >
+                {mode.label}
+              </button>
+            ))}
           </div>
         </div>
       </div>
+
       <div className="flex-1 min-h-[220px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={hourlyOrders} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
@@ -80,7 +122,7 @@ export function OrderFlowChart() {
               axisLine={false}
               tickLine={false}
             />
-            <Tooltip content={<CustomTooltip />} />
+            <Tooltip content={<CustomTooltip compareLabel={currentLabel} />} />
             <ReferenceLine
               x={peakHour.hour}
               stroke="hsl(25, 95%, 53%)"
@@ -89,7 +131,7 @@ export function OrderFlowChart() {
             />
             <Area
               type="monotone"
-              dataKey="avg7day"
+              dataKey={compareMode}
               stroke="hsl(220, 10%, 70%)"
               strokeWidth={1.5}
               fill="transparent"

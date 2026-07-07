@@ -11,6 +11,8 @@ export interface KpiData {
   export interface HourlyOrder {
     hour: string;
     today: number;
+    yesterday: number;
+    avg3day: number;
     avg7day: number;
   }
   
@@ -79,18 +81,18 @@ export interface KpiData {
   
   // 시간대별 주문 흐름
   export const hourlyOrders: HourlyOrder[] = [
-    { hour: '10시', today: 5,  avg7day: 6  },
-    { hour: '11시', today: 18, avg7day: 16 },
-    { hour: '12시', today: 42, avg7day: 37 },
-    { hour: '13시', today: 35, avg7day: 33 },
-    { hour: '14시', today: 12, avg7day: 13 },
-    { hour: '15시', today: 8,  avg7day: 9  },
-    { hour: '16시', today: 6,  avg7day: 7  },
-    { hour: '17시', today: 14, avg7day: 12 },
-    { hour: '18시', today: 28, avg7day: 26 },
-    { hour: '19시', today: 32, avg7day: 29 },
-    { hour: '20시', today: 22, avg7day: 21 },
-    { hour: '21시', today: 15, avg7day: 13 },
+    { hour: '10시', today: 5,  yesterday: 4,  avg3day: 5,  avg7day: 6  },
+    { hour: '11시', today: 18, yesterday: 15, avg3day: 16, avg7day: 16 },
+    { hour: '12시', today: 42, yesterday: 38, avg3day: 40, avg7day: 37 },
+    { hour: '13시', today: 35, yesterday: 32, avg3day: 34, avg7day: 33 },
+    { hour: '14시', today: 12, yesterday: 14, avg3day: 13, avg7day: 13 },
+    { hour: '15시', today: 8,  yesterday: 9,  avg3day: 9,  avg7day: 9  },
+    { hour: '16시', today: 6,  yesterday: 7,  avg3day: 7,  avg7day: 7  },
+    { hour: '17시', today: 14, yesterday: 11, avg3day: 12, avg7day: 12 },
+    { hour: '18시', today: 28, yesterday: 25, avg3day: 27, avg7day: 26 },
+    { hour: '19시', today: 32, yesterday: 29, avg3day: 30, avg7day: 29 },
+    { hour: '20시', today: 22, yesterday: 20, avg3day: 21, avg7day: 21 },
+    { hour: '21시', today: 15, yesterday: 12, avg3day: 13, avg7day: 13 },
   ];
   
   // 주방 처리 상태
