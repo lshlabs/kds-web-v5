@@ -41,11 +41,11 @@ export default function Index() {
         </section>
 
         {/* 차트 영역 */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <div className="lg:col-span-2">
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch">
+          <div className="lg:col-span-2 flex flex-col">
             <OrderFlowChart />
           </div>
-          <div>
+          <div className="flex flex-col">
             <KitchenStatus />
           </div>
         </section>

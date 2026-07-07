@@ -18,7 +18,7 @@ export function KitchenStatus() {
   const total = kitchenStatus.reduce((sum, item) => sum + item.count, 0);
 
   return (
-    <Card className="p-5 bg-card border-border/50">
+    <Card className="p-5 bg-card border-border/50 h-full flex flex-col">
       <div className="mb-4">
         <h3 className="text-base font-semibold">주방 처리 상태</h3>
         <p className="text-xs text-muted-foreground mt-0.5">
@@ -26,7 +26,7 @@ export function KitchenStatus() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 flex-1">
         {/* 도넛 차트 */}
         <div className="flex flex-col items-center">
           <div className="h-[140px] w-[140px] relative">

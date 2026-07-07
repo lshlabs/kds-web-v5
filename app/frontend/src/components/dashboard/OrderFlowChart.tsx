@@ -40,7 +40,7 @@ export function OrderFlowChart() {
   );
 
   return (
-    <Card className="p-5 bg-card border-border/50">
+    <Card className="p-5 bg-card border-border/50 h-full flex flex-col">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="text-base font-semibold">시간대별 주문 흐름</h3>
@@ -59,7 +59,7 @@ export function OrderFlowChart() {
           </div>
         </div>
       </div>
-      <div className="h-[220px]">
+      <div className="flex-1 min-h-[220px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={hourlyOrders} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
             <defs>
