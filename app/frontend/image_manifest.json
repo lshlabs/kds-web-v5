@@ -1,0 +1,37 @@
+{
+    "status": "success",
+    "results": [
+      {
+        "status": "success",
+        "filename": "dashboard-hero-bg-data-flow.jpg",
+        "url": "https://mgx-backend-cdn.metadl.com/generate/images/1408327/2026-07-06/r5wsi2qcaiza/dashboard-hero-bg-data-flow.png",
+        "path": "https://mgx-backend-cdn.metadl.com/generate/images/1408327/2026-07-06/r5wsi2qcaiza/dashboard-hero-bg-data-flow.png",
+        "absolute_path": "https://mgx-backend-cdn.metadl.com/generate/images/1408327/2026-07-06/r5wsi2qcaiza/dashboard-hero-bg-data-flow.png"
+      },
+      {
+        "status": "success",
+        "filename": "kitchen-operations-illustration.png",
+        "url": "https://mgx-backend-cdn.metadl.com/generate/images/1408327/2026-07-06/r5wsjuacai2q/kitchen-operations-illustration.png",
+        "path": "https://mgx-backend-cdn.metadl.com/generate/images/1408327/2026-07-06/r5wsjuacai2q/kitchen-operations-illustration.png",
+        "absolute_path": "https://mgx-backend-cdn.metadl.com/generate/images/1408327/2026-07-06/r5wsjuacai2q/kitchen-operations-illustration.png"
+      },
+      {
+        "status": "success",
+        "filename": "metric-completion-time-icon.png",
+        "url": "https://mgx-backend-cdn.metadl.com/generate/images/1408327/2026-07-06/r5wskaycaizq/metric-completion-time-icon.png",
+        "path": "https://mgx-backend-cdn.metadl.com/generate/images/1408327/2026-07-06/r5wskaycaizq/metric-completion-time-icon.png",
+        "absolute_path": "https://mgx-backend-cdn.metadl.com/generate/images/1408327/2026-07-06/r5wskaycaizq/metric-completion-time-icon.png"
+      },
+      {
+        "status": "success",
+        "filename": "metric-sales-performance-icon.png",
+        "url": "https://mgx-backend-cdn.metadl.com/generate/images/1408327/2026-07-06/r5wskpqcai2a/metric-sales-performance-icon.png",
+        "path": "https://mgx-backend-cdn.metadl.com/generate/images/1408327/2026-07-06/r5wskpqcai2a/metric-sales-performance-icon.png",
+        "absolute_path": "https://mgx-backend-cdn.metadl.com/generate/images/1408327/2026-07-06/r5wskpqcai2a/metric-sales-performance-icon.png"
+      }
+    ],
+    "success_count": 4,
+    "failed_count": 0,
+    "running_count": 0,
+    "message": "Generated 4/4 images total"
+  }
